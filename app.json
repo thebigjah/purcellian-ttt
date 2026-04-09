@@ -3,7 +3,7 @@
     "name": "purcellian-ttt",
     "slug": "purcellian-ttt",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
@@ -24,7 +24,15 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "bundler": "metro",
+      "output": "single",
+      "favicon": "./assets/favicon.png",
+      "name": "Purcellian TTT",
+      "shortName": "PTT",
+      "description": "3D Ultimate Tic Tac Toe"
+    },
+    "plugins": [
+      "expo-asset"
+    ]
   }
 }
