@@ -120,23 +120,9 @@ export default function SettingsScreen({ navigation }: Props) {
           />
         </View>
 
-        <View style={[styles.toggleRow, { marginTop: 10 }]}>
-          <View style={styles.toggleInfo}>
-            <Text style={styles.toggleLabel}>Sound Effects</Text>
-            <Text style={styles.toggleSub}>Coming soon</Text>
-          </View>
-          <Switch
-            value={modifiers.soundEffects}
-            onValueChange={(v) => updateModifiers({ soundEffects: v })}
-            trackColor={{ false: '#334466', true: COLORS.gold }}
-            thumbColor={modifiers.soundEffects ? '#fff' : '#888'}
-            disabled
-          />
-        </View>
-
         <View style={[styles.comingSoon, { marginTop: 12 }]}>
           <Text style={styles.comingSoonText}>More Coming Soon</Text>
-          <Text style={styles.comingSoonSub}>Timed turns, blind mode, power-ups, AI opponent</Text>
+          <Text style={styles.comingSoonSub}>Timed turns, blind mode, power-ups</Text>
         </View>
       </View>
 

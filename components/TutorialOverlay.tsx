@@ -57,18 +57,16 @@ const STEPS: Step[] = [
   },
   {
     title: 'The Key Rule',
-    body: "The cell you play inside a mini-board (0–26) determines which macro board your opponent must play in next.\n\nPlay in cell #7? Your opponent must open macro board #7. You're not just playing tic-tac-toe — you're choosing their battlefield.",
+    body: "The cell you play inside a mini-board (numbered 1 to 27) decides which board your opponent must play in next.\n\nPlay in cell 7, and your opponent must play in board 7. You're not just playing tic-tac-toe — you're choosing their battlefield.",
     visual: [
-      '  You play cell #5',
-      '  in board #12',
+      '  You play cell 5',
+      '  in board 12',
       '',
-      '  Cell positions:',
-      '  [ 0][ 1][ 2]',
-      '  [ 3][ 4][ 5] ← you pick #5',
-      '  [ 6][ 7][ 8]',
-      '  ...layers continue...',
+      '  Your opponent must',
+      '  play in board 5',
       '',
-      '  → Opponent must play board #5',
+      '  The move log shows the',
+      '  board and cell of every move',
     ].join('\n'),
   },
   {
@@ -99,7 +97,7 @@ const STEPS: Step[] = [
   },
   {
     title: 'Winning the Game',
-    body: "Claim 3 macro boards in a row to win. There are 49 winning lines across the 3×3×3 cube — straight rows, face diagonals, and space diagonals that cut through the center.\n\nThe 4 space diagonals are the sneakiest. Watch the center board (#13) — it's on 49% of all winning lines.",
+    body: "Claim 3 macro boards in a row to win. There are 49 winning lines across the 3×3×3 cube — straight rows, face diagonals, and space diagonals that cut through the center.\n\nThe 4 space diagonals are the sneakiest. Watch the center board, board 14. It sits on 13 of the 49 winning lines, more than any other board.",
     visual: [
       '  Macro win examples:',
       '',
@@ -120,9 +118,11 @@ const STEPS: Step[] = [
 interface Props {
   visible: boolean;
   onClose: () => void;
+  // Called by the last step's "Let's Play" button; falls back to onClose.
+  onFinish?: () => void;
 }
 
-export default function TutorialOverlay({ visible, onClose }: Props) {
+export default function TutorialOverlay({ visible, onClose, onFinish }: Props) {
   const [step, setStep] = useState(0);
   const insets = useSafeAreaInsets();
   const current = STEPS[step];
@@ -130,7 +130,7 @@ export default function TutorialOverlay({ visible, onClose }: Props) {
 
   const handleNext = () => {
     if (isLast) {
-      onClose();
+      (onFinish ?? onClose)();
       setStep(0);
     } else {
       setStep(s => s + 1);

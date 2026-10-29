@@ -1,5 +1,6 @@
 import { OrbitControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
+import FitCamera from './FitCamera';
 import React from 'react';
 import {
   StyleSheet,
@@ -12,6 +13,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CellValue, Player } from '../game/types';
 import { COLORS } from '../utils/colors';
 import { OSymbol3D, XSymbol3D } from './Symbols3D';
+
+// 3x3x3 cells of 0.82 at unit spacing: half-extent about 1.41, so this radius keeps a margin.
+const MINI_CAMERA: [number, number, number] = [3, 2.5, 4];
+const MINI_RADIUS = 2.6;
 
 function indexToPosition(i: number): [number, number, number] {
   const x = i % 3;
@@ -101,7 +106,7 @@ function MiniBoardScene({ boardState, onCellPress, xColor, oColor, show3DSymbols
       <OrbitControls
         enableZoom={true}
         minDistance={2}
-        maxDistance={10}
+        maxDistance={16}
         enablePan={false}
         rotateSpeed={0.6}
         minPolarAngle={Math.PI / 6}
@@ -262,8 +267,9 @@ export default function MiniBoardCubeView({
           <Canvas
             style={styles.canvas}
             gl={{ alpha: true }}
-            camera={{ position: [3, 2.5, 4], fov: 50, near: 0.1, far: 100 }}
+            camera={{ position: MINI_CAMERA, fov: 50, near: 0.1, far: 100 }}
           >
+            <FitCamera base={MINI_CAMERA} radius={MINI_RADIUS} />
             <MiniBoardScene
               boardState={boardState}
               onCellPress={isWon ? () => {} : onCellPress}

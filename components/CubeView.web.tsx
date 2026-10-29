@@ -1,9 +1,9 @@
 import { OrbitControls } from '@react-three/drei';
-import { Canvas, useThree } from '@react-three/fiber';
-import React, { useEffect } from 'react';
+import { Canvas } from '@react-three/fiber';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import type * as THREE from 'three';
 import { GameState } from '../game/types';
+import FitCamera from './FitCamera';
 import MacroCell from './MacroCell';
 
 interface CubeViewProps {
@@ -26,23 +26,6 @@ function indexToPosition(i: number): [number, number, number] {
 const BASE_CAMERA: [number, number, number] = [4.5, 3.5, 5.5];
 // Radius of a sphere that holds the whole 3x3x3 cube with a little margin.
 const CUBE_RADIUS = 2.9;
-
-// The camera's field of view is vertical, so on a narrow portrait screen the sides of the
-// cube fall off the edges. Back the camera off until the cube fits the narrower dimension.
-function FitCamera() {
-  const { camera, size } = useThree();
-  useEffect(() => {
-    const cam = camera as THREE.PerspectiveCamera;
-    const aspect = size.width / Math.max(1, size.height);
-    const halfV = (cam.fov * Math.PI) / 360;
-    const halfH = Math.atan(Math.tan(halfV) * aspect);
-    const need = CUBE_RADIUS / Math.sin(Math.min(halfV, halfH));
-    const base = Math.hypot(...BASE_CAMERA);
-    cam.position.set(...BASE_CAMERA).setLength(Math.max(base, need));
-    cam.updateProjectionMatrix();
-  }, [camera, size.width, size.height]);
-  return null;
-}
 
 function SceneContents({ gameState, onBoardSelect, xColor, oColor, show3DSymbols, movedBoards, rotationKey }: CubeViewProps) {
   const { macroCells, requiredBoard, winner, isDraw, winningLine } = gameState;
@@ -104,7 +87,7 @@ export default function CubeView({ gameState, onBoardSelect, xColor, oColor, sho
         gl={{ alpha: true }}
         camera={{ position: [4.5, 3.5, 5.5], fov: 45, near: 0.1, far: 100 }}
       >
-        <FitCamera />
+        <FitCamera base={BASE_CAMERA} radius={CUBE_RADIUS} />
         <SceneContents
           gameState={gameState}
           onBoardSelect={onBoardSelect}

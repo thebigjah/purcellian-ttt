@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function MainMenuScreen({ navigation }: Props) {
-  const { score, resetScore, playerColors } = useSettings();
+  const { score, resetScore, playerColors, modifiers } = useSettings();
   const [tutorialVisible, setTutorialVisible] = useState(false);
   const hasScore = score.X > 0 || score.O > 0 || score.draws > 0;
 
@@ -72,11 +72,15 @@ export default function MainMenuScreen({ navigation }: Props) {
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.footer}>Pass & Play — 2 Players</Text>
+      <Text style={styles.footer}>{modifiers.aiEnabled ? 'Playing against the computer' : 'Pass and play, 2 players'}</Text>
 
       <TutorialOverlay
         visible={tutorialVisible}
         onClose={() => setTutorialVisible(false)}
+        onFinish={() => {
+          setTutorialVisible(false);
+          navigation.navigate('Game');
+        }}
       />
     </View>
   );
