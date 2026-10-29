@@ -57,7 +57,7 @@ const STEPS: Step[] = [
   },
   {
     title: 'The Key Rule',
-    body: "The cell you play inside a mini-board (numbered 1 to 27) decides which board your opponent must play in next.\n\nPlay in cell 7, and your opponent must play in board 7. You're not just playing tic-tac-toe — you're choosing their battlefield.",
+    body: "The cell you play inside a mini-board (numbered 1 to 27) decides which board your opponent must play in next.\n\nPlay in cell 7, and your opponent must play in board 7. Every move you make also picks the board they play next.",
     visual: [
       '  You play cell 5',
       '  in board 12',
@@ -97,7 +97,7 @@ const STEPS: Step[] = [
   },
   {
     title: 'Winning the Game',
-    body: "Claim 3 macro boards in a row to win. There are 49 winning lines across the 3×3×3 cube — straight rows, face diagonals, and space diagonals that cut through the center.\n\nThe 4 space diagonals are the sneakiest. Watch the center board, board 14. It sits on 13 of the 49 winning lines, more than any other board.",
+    body: "Claim 3 macro boards in a row to win. There are 49 winning lines across the 3×3×3 cube: straight rows, face diagonals, and space diagonals that cut through the center.\n\nThe 4 space diagonals are the sneakiest. Watch the center board, board 14. It sits on 13 of the 49 winning lines, more than any other board.",
     visual: [
       '  Macro win examples:',
       '',
